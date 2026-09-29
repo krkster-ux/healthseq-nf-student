@@ -13,7 +13,7 @@ process SUMMARIZE_CONTEXT {
     """
     echo 'HealthSeq-NF teaching case summary' > upec_context_summary.txt
     cat ${context_file} >> upec_context_summary.txt
-    echo "Input filename: $(context_file)" >> upec_context_summary.txt
+    echo "Input filename: ${context_file.name}" >> upec_context_summary.txt
     """
 }
 
