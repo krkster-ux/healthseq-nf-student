@@ -1,5 +1,7 @@
 nextflow.enable.dsl = 2  // Use the current Nextflow DSL2 syntax.
 
+params.case_name = "UPEC"
+
 // STUDENT TASK 1:
 // Define params.case_name with U13824 as the default value.
 // Key: params.case_name stores a value that users can override.
@@ -16,15 +18,19 @@ process CREATE_PARAMETER_REPORT {  // Define the report-creation process.
 
     script:
     """
-    echo "Teaching case: ${case_name}" > parameter_report.txt  # Write the value to the report.
+    echo "Teaching case: ${case_name}" > parameter_report.txt  // Write the value to the report.
     """
 }
 
 workflow {  // Define the workflow data flow.
 
+    cname = channel.value(params.case_name)
+
     // STUDENT TASK 2:
     // Create a value channel from params.case_name.
     // Key: Channel.value(...) creates a channel containing one value.
+
+    CREATE_PARAMETER_REPORT(cname)
 
     // STUDENT TASK 3:
     // Pass the value channel to CREATE_PARAMETER_REPORT.

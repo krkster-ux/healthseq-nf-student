@@ -18,7 +18,7 @@ process SUMMARIZE_CONTEXT {
 }
 
 workflow {
-    context_ch = Channel.fromPath(
+    context_ch = channel.fromPath(
         "${projectDir}/upec_context.txt",
         checkIfExists: true
     )
