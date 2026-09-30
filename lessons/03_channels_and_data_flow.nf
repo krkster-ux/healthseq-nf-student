@@ -33,14 +33,12 @@ process ADD_REPRODUCIBILITY_NOTE {
 }
 
 workflow {
-    context_ch = Channel.fromPath(
+    context_ch = channel.fromPath(
         "${projectDir}/upec_context.txt",
         checkIfExists: true
     )
 
     CREATE_CASE_REPORT(context_ch)
 
-    // STUDENT TASK:
-    // Connect CREATE_CASE_REPORT.out.report
-    // to ADD_REPRODUCIBILITY_NOTE.
+    ADD_REPRODUCIBILITY_NOTE(CREATE_CASE_REPORT.out.report)
 }

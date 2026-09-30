@@ -6,14 +6,19 @@ nextflow.enable.dsl = 2  // Use the current Nextflow DSL2 syntax.
  * A Nextflow process describes one reproducible task.
  * This process creates a small text file.
  */
+
+params.outdir = "${projectDir}/outputs/"
+
 process SAY_HELLO {  // Define a process named SAY_HELLO.
+
+    publishDir params.outdir, mode: 'copy'
 
     output:
     path "hello_nextflow.txt"  // Declare the file the process must create.
 
     script:
     """
-    echo "Hello from Nextflow" > hello_nextflow.txt  # Write the message to the file.
+    echo "This is my first reproducible output" > hello_nextflow.txt  # Write the message to the file.
     """
 }
 
