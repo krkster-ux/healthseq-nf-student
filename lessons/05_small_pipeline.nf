@@ -41,6 +41,24 @@ process ADD_EVIDENCE_BOUNDARY {  // Define the second process.
     """
 }
 
+process FINALIZE_LESSON_REPORT {
+
+    tag "lesson 5 finalization"
+
+    publishDir params.lesson_outdir, mode: "copy"
+
+    input:
+    path bounded_report
+
+    output:
+    path "lesson5_final_report.txt"
+
+    script:
+    """
+    cat ${bounded_report} > "lesson5_final_report.txt"
+    """
+
+}
 // STUDENT TASK 1:
 // Add a process named FINALIZE_LESSON_REPORT.
 //
@@ -55,12 +73,12 @@ process ADD_EVIDENCE_BOUNDARY {  // Define the second process.
 
 workflow {  // Define the workflow data flow.
 
-    context_ch = Channel.fromPath(  // Create a channel containing the context file.
+    context_ch = channel.fromPath(  // Create a channel containing the context file.
         "${projectDir}/upec_context.txt",  // Locate the file beside the workflow.
         checkIfExists: true  // Stop if the input file does not exist.
     )
 
-    case_name_ch = Channel.value(params.case_name)  // Create a channel for the case name.
+    case_name_ch = channel.value(params.case_name)  // Create a channel for the case name.
 
     CREATE_CASE_SUMMARY(
         context_ch,  // Send the context-file channel to the first process.
@@ -69,6 +87,10 @@ workflow {  // Define the workflow data flow.
 
     ADD_EVIDENCE_BOUNDARY(
         CREATE_CASE_SUMMARY.out.summary  // Send the named summary output to Process 2.
+    )
+
+    FINALIZE_LESSON_REPORT(
+        ADD_EVIDENCE_BOUNDARY.out.bounded_report
     )
 
     // STUDENT TASK 2:
