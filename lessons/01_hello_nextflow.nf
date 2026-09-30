@@ -13,7 +13,7 @@ process SAY_HELLO {  // Define a process named SAY_HELLO.
 
     script:
     """
-    echo "Hello from Nextflow" > hello_nextflow.txt  # Write the message to the file.
+    echo "This is my first reproducible output" > hello_nextflow.txt  # Write the message to the file.
     """
 }
 
